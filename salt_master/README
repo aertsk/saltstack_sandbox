@@ -1,3 +1,4 @@
+# Step 1: Get familiar with saltstack
 https://www.tutorialspoint.com/saltstack
 
 # On salt_master: restart saltstack
@@ -10,6 +11,7 @@ service salt-minion restart
 salt-key -L
 
 # On salt_master: Accept all keys (NOT SECURE!!!!)
+# Can be persisted in master config file using 'open_mode: True'
 salt-key -A
 
 # Test salt connectivity
@@ -17,3 +19,6 @@ salt '*' test.ping
 
 # Deploy /srv/salt/test.sls Salt State
 salt '*’ state.apply test
+
+# Step 2: How to deploy a docker using saltstack
+https://www.jacksoncage.se/posts/2014/10/01/use-salt-to-manage-and-deploy-docker-containers.html
