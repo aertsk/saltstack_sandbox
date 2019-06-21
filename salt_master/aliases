@@ -1,0 +1,26 @@
+#Docker create network
+alias salt_create_network='docker network create \
+  --driver=bridge \
+  --subnet=172.28.0.0/16 \
+  --ip-range=172.28.5.0/24 \
+  salt_network'
+
+#Docker build ALIAS
+alias salt_master_build='docker build -t salt_master:1 .'
+
+#Docker run ALIAS
+alias salt_master_run='docker run -d \
+  --name salt_master \
+  --hostname salt_master \
+  --network salt_network \
+  --ip 172.28.5.10 \
+  --restart unless-stopped \
+  -t salt_master:1'
+
+#Docker attach ALIAS
+alias salt_master_console='docker exec -it salt_master /bin/bash'
+
+#Docker stop ALIAS
+alias salt_master_stop='docker stop salt_master &&\
+docker rm -v salt_master &&\
+docker rmi salt_master:1'

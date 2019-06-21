@@ -1,0 +1,19 @@
+https://www.tutorialspoint.com/saltstack
+
+# On salt_master: restart saltstack
+service salt-master restart
+
+# On salt_minion: restart saltstack
+service salt-minion restart
+
+# On salt_master: Check keys
+salt-key -L
+
+# On salt_master: Accept all keys (NOT SECURE!!!!)
+salt-key -A
+
+# Test salt connectivity
+salt '*' test.ping
+
+# Deploy /srv/salt/test.sls Salt State
+salt '*’ state.apply test
