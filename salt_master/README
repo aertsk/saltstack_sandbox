@@ -18,7 +18,14 @@ salt-key -A
 salt '*' test.ping
 
 # Deploy /srv/salt/test.sls Salt State
-salt '*’ state.apply test
+salt '*' state.apply ci_jenkins
 
 # Step 2: How to deploy a docker using saltstack
 https://www.jacksoncage.se/posts/2014/10/01/use-salt-to-manage-and-deploy-docker-containers.html
+
+
+# TIPS:
+############
+
+# On salt_minion: Remove minion key
+rm /etc/salt/pki/minion/*
