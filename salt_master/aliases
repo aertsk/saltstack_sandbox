@@ -17,6 +17,20 @@ alias salt_master_run='docker run -d \
   --restart unless-stopped \
   -t salt_master:1'
 
+  #Docker run ALIAS on host
+  #Make sure that:
+  #'HOSTIP salt' is present in /etc/hosts
+  #salt-minion is installed on  the HOST
+  #python-pip is installed on  the HOST
+
+  alias salt_master_run_test='docker run -d \
+    --name salt_master \
+    -p 4505:4505/tcp \
+    -p 4506:4506/tcp \
+    --hostname salt_master \
+    --restart unless-stopped \
+    -t salt_master:1'
+
 #Docker attach ALIAS
 alias salt_master_console='docker exec -it salt_master /bin/bash'
 

@@ -17,4 +17,4 @@ RUN mkdir -p /srv/salt/ci_jenkins
 
 # Populate saltstack directory structure
 COPY saltstack/salt/top.sls /srv/salt/
-COPY saltstack/salt/ci_jenkins/init.sls /srv/salt/ci_jenkins/
+COPY saltstack/salt/test/init.sls /srv/salt/test/
