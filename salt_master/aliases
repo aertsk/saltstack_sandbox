@@ -23,7 +23,7 @@ alias salt_master_run='docker run -d \
   #salt-minion is installed on  the HOST
   #python-pip is installed on  the HOST
 
-  alias salt_master_run_test='docker run -d \
+  alias salt_master_run_on_host='docker run -d \
     --name salt_master \
     -p 4505:4505/tcp \
     -p 4506:4506/tcp \

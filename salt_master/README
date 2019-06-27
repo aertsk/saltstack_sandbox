@@ -28,4 +28,10 @@ https://www.jacksoncage.se/posts/2014/10/01/use-salt-to-manage-and-deploy-docker
 ############
 
 # On salt_minion: Remove minion key
+####################################
+
+#Inside dockerised minion
 rm /etc/salt/pki/minion/*
+
+#On target minion
+rm -rf /var/lib/salt/pki/minion
