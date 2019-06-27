@@ -1,10 +1,15 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Install required packages
 RUN apt-get update && \
     apt-get -y install vim net-tools iputils-ping tree && \
+    apt-get -y install python-pip && \
     apt-get -y install salt-master && \
     apt-get clean
+
+RUN pip install docker
 
 # Modify console prompt
 RUN echo 'export PS1="[\u@salt-master] \w # "' >> /root/.bashrc

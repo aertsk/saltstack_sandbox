@@ -23,6 +23,11 @@ salt '*' state.apply ci_jenkins
 # Step 2: How to deploy a docker using saltstack
 https://www.jacksoncage.se/posts/2014/10/01/use-salt-to-manage-and-deploy-docker-containers.html
 
+# Install docker on minion:
+salt 'testuser-Latitude-E5410' state.sls docker
+
+# Deploy docker
+salt 'testuser-Latitude-E5410' state.sls dock_apache
 
 # TIPS:
 ############

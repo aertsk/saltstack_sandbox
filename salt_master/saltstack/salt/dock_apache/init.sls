@@ -1,3 +1,7 @@
+docker.pull:
+  module.run:
+    - repo: utahdave/saltdemo
+
 apache-image:
    docker.pulled:
      - name: utahdave/saltdemo
@@ -17,18 +21,3 @@ apache:
             "80/tcp":
                 HostIp: ""
                 HostPort: "8000"
-
-apache-container2:
-   docker.installed:
-     - name: apache2
-     - hostname: apache2
-     - image: utahdave/saltdemo
-     - require_in: apache2
-
-apache2:
-   docker.running:
-     - container: apache2
-     - port_bindings:
-            "80/tcp":
-                HostIp: ""
-                HostPort: "8080"
