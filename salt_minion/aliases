@@ -15,7 +15,8 @@ alias salt_minion_run='docker run -d \
 alias salt_minion_console='docker exec -it salt_minion /bin/bash'
 
 #Docker stop ALIAS
-alias salt_minion_stop='docker stop salt_minion'
+alias salt_minion_stop='docker stop salt_minion &&\
+docker rm -v salt_minion'
 
 #Docker remove ALIAS
 alias salt_minion_remove='docker stop salt_minion &&\

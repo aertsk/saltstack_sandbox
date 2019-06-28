@@ -35,7 +35,8 @@ alias salt_master_run='docker run -d \
 alias salt_master_console='docker exec -it salt_master /bin/bash'
 
 #Docker stop ALIAS
-alias salt_master_stop='docker stop salt_master'
+alias salt_master_stop='docker stop salt_master &&\
+docker rm -v salt_master'
 
 #Docker remove ALIAS
 alias salt_master_remove='docker stop salt_master &&\
