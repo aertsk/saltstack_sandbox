@@ -21,13 +21,9 @@ salt '*' test.ping
 salt '*' state.apply ci_jenkins
 
 # Step 2: How to deploy a docker using saltstack
-https://www.jacksoncage.se/posts/2014/10/01/use-salt-to-manage-and-deploy-docker-containers.html
 
-# Install docker on minion:
-salt 'testuser-Latitude-E5410' state.sls docker
-
-# Deploy docker
-salt 'testuser-Latitude-E5410' state.sls dock_apache
+# Deploy docker on minion:
+salt 'salt_minion' state.sls dock_nginx
 
 # TIPS:
 ############
@@ -40,3 +36,22 @@ rm /etc/salt/pki/minion/*
 
 #On target minion
 rm -rf /var/lib/salt/pki/minion
+
+# Install pip
+salt 'salt_minion' pip.install docker-py
+
+salt 'salt_minion' docker.exists nginx
+salt 'salt_minion' dockerng.start nginx
+
+# Does not work for some reason in sls file:
+####################################
+
+python-pip-pkg:
+  pkg.installed:
+    - name: python-pip
+    - version: 8.1.1
+
+docker-py:
+  pip.installed:
+    - require:
+      - pkg: python-pip

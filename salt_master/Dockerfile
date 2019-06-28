@@ -1,15 +1,12 @@
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install required packages
 RUN apt-get update && \
     apt-get -y install vim net-tools iputils-ping tree && \
-    apt-get -y install python-pip && \
     apt-get -y install salt-master && \
     apt-get clean
-
-RUN pip install docker
 
 # Modify console prompt
 RUN echo 'export PS1="[\u@salt-master] \w # "' >> /root/.bashrc
@@ -28,5 +25,4 @@ COPY saltstack/salt/test/init.sls /srv/salt/test/
 
 # Second experiment
 # https://hub.packtpub.com/docker-container-management-with-saltstack/
-COPY saltstack/salt/docker /srv/salt/docker
-COPY saltstack/salt/dock_apache /srv/salt/dock_apache
+COPY saltstack/salt/dock_nginx /srv/salt/dock_nginx
