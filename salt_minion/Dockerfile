@@ -1,13 +1,16 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # Install required packages
 RUN apt-get update && \
-    apt-get -y install vim net-tools iputils-ping tree && \
-    apt-get -y install salt-minion && \
-    apt-get -y install python-pip && \
-    apt-get clean
+    apt-get -y install vim net-tools iputils-ping tree wget gnupg
 
-RUN pip install docker-py
+# Pin to latest Major saltstack release
+RUN wget -O - https://repo.saltstack.com/apt/ubuntu/18.04/amd64/2019.2/SALTSTACK-GPG-KEY.pub | apt-key add -
+RUN echo deb http://repo.saltstack.com/apt/ubuntu/18.04/amd64/2019.2 bionic main > /etc/apt/sources.list.d/saltstack.list
+
+RUN apt-get update && \
+    apt-get -y install salt-minion && \
+    apt-get clean
 
 # Modify console prompt
 RUN echo 'export PS1="[\u@salt-minion] \w # "' >> /root/.bashrc

@@ -25,6 +25,17 @@ salt '*' state.apply ci_jenkins
 # Deploy docker on minion:
 salt 'salt_minion' state.sls dock_nginx
 
+# Step 3: Deploy on host both master and minion running on host both ubuntu 16.4
+
+#dockerng execution module:
+https://docs.saltstack.com/en/2015.8/ref/modules/all/salt.modules.dockerng.html#module-salt.modules.dockerng
+
+
+#dockerng state module: SLS
+https://docs.saltstack.com/en/2015.8/ref/states/all/salt.states.dockerng.html
+
+salt 'testuser-Latitude-E5410' state.sls dock_nginx
+
 # TIPS:
 ############
 

@@ -497,6 +497,7 @@ file_roots:
 #  - '*.pyc'
 #  - '*/somefolder/*.bak'
 #  - '*.swp'
+file_ignore_glob: []
 
 # File Server Backend
 #
