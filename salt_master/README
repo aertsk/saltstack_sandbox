@@ -20,49 +20,138 @@ salt '*' test.ping
 # Deploy /srv/salt/test.sls Salt State
 salt '*' state.apply ci_jenkins
 
-# Step 2: How to deploy a docker using saltstack
+# Step 2: How to deploy a docker using saltstack completely virtual environment
 
 # Deploy docker on minion:
 salt 'salt_minion' state.sls dock_nginx
 
-# Step 3: Deploy on host both master and minion running on host both ubuntu 16.4
+# Step 3: Deploy on host both master and minion running on host both ubuntu 18.4
 
-#dockerng execution module:
-https://docs.saltstack.com/en/2015.8/ref/modules/all/salt.modules.dockerng.html#module-salt.modules.dockerng
-
-
-#dockerng state module: SLS
-https://docs.saltstack.com/en/2015.8/ref/states/all/salt.states.dockerng.html
-
+# Deploy docker on minion:
 salt 'testuser-Latitude-E5410' state.sls dock_nginx
+
+# Used salt_minion/rollback.sh to rollback minion to maiden state
+
+It works!!:
+
+#SALT MASTER:
+###################
+
+[root@salt-master] /srv/salt/dock_nginx # salt 'testuser-Latitude-E5410' state.sls dock_nginx
+testuser-Latitude-E5410:
+----------
+          ID: install_python3-pip
+    Function: pkg.installed
+        Name: python3-pip
+      Result: True
+     Comment: The following packages were installed/updated: python3-pip
+     Started: 10:09:20.048104
+    Duration: 12013.14 ms
+     Changes:
+              ----------
+              python3-pip:
+                  ----------
+                  new:
+                      9.0.1-2.3~ubuntu1.18.04.1
+                  old:
+----------
+          ID: install_docker_salt_module
+    Function: pip.installed
+        Name: docker
+      Result: True
+     Comment: All packages were successfully installed
+     Started: 10:09:37.843350
+    Duration: 7475.4 ms
+     Changes:
+              ----------
+              docker==4.0.2:
+                  Installed
+----------
+          ID: install_docker
+    Function: pkg.installed
+        Name: docker.io
+      Result: True
+     Comment: The following packages were installed/updated: docker.io
+     Started: 10:09:45.340868
+    Duration: 26255.574 ms
+     Changes:
+              ----------
+              docker.io:
+                  ----------
+                  new:
+                      18.09.5-0ubuntu1~18.04.2
+                  old:
+----------
+          ID: start_docker_service
+    Function: service.running
+        Name: docker
+      Result: True
+     Comment: The service docker is already running
+     Started: 10:10:13.572235
+    Duration: 61.961 ms
+     Changes:
+----------
+          ID: pull_nginx_image
+    Function: docker_image.present
+        Name: nginx
+      Result: True
+     Comment: Image 'nginx:latest' was pulled
+     Started: 10:10:13.636793
+    Duration: 8336.967 ms
+     Changes:
+              ----------
+              Layers:
+                  ----------
+                  Pulled:
+                      - 0b760b431b11
+                      - fc7181108d40
+                      - d2e987ca2267
+              Status:
+                  Downloaded newer image for nginx:latest
+              Time_Elapsed:
+                  1.405505895614624
+              retcode:
+                  0
+----------
+          ID: start_nginx
+    Function: docker_container.running
+      Result: True
+     Comment: Created container 'start_nginx'
+     Started: 10:10:21.975384
+    Duration: 6232.684 ms
+     Changes:
+              ----------
+              container_id:
+                  ----------
+                  added:
+                      eb16ab7071b56a2225de0c4cd4cb26d70420b2da60f4e1bdcf166025f3b93e7e
+              state:
+                  ----------
+                  new:
+                      running
+                  old:
+                      None
+
+Summary for testuser-Latitude-E5410
+------------
+Succeeded: 6 (changed=5)
+Failed:    0
+------------
+Total states run:     6
+Total run time:  60.376 s
+[root@salt-master] /srv/salt/dock_nginx #
+
+#SALT MINION:
+###################
+
+root@testuser-Latitude-E5410:/usr/localdisk# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+eb16ab7071b5        nginx               "nginx -g 'daemon of…"   8 minutes ago       Up 8 minutes        80/tcp              start_nginx
+root@testuser-Latitude-E5410:/usr/localdisk#
 
 # TIPS:
 ############
 
 # On salt_minion: Remove minion key
 ####################################
-
-#Inside dockerised minion
 rm /etc/salt/pki/minion/*
-
-#On target minion
-rm -rf /var/lib/salt/pki/minion
-
-# Install pip
-salt 'salt_minion' pip.install docker-py
-
-salt 'salt_minion' docker.exists nginx
-salt 'salt_minion' dockerng.start nginx
-
-# Does not work for some reason in sls file:
-####################################
-
-python-pip-pkg:
-  pkg.installed:
-    - name: python-pip
-    - version: 8.1.1
-
-docker-py:
-  pip.installed:
-    - require:
-      - pkg: python-pip

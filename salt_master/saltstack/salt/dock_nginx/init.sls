@@ -1,10 +1,6 @@
-install_python-pip:
+install_python3-pip:
   pkg.installed:
-    - name: python-pip
-
-#install_docker_salt_module:
-#pip install docker:
-#  cmd.run
+    - name: python3-pip
 
 install_docker_salt_module:
   pip.installed:
@@ -13,15 +9,11 @@ install_docker_salt_module:
     - exists_action: i
     - force_reinstall: True
     - require:
-      - pkg: python-pip
+      - pkg: python3-pip
 
 install_docker:
   pkg.installed:
     - name: docker.io
-
-#TO DO: Check out following steps
-service docker start:
-  cmd.run
 
 #https://docs.saltstack.com/en/latest/ref/states/all/salt.states.service.html#salt.states.service.running
 start_docker_service:
@@ -29,10 +21,13 @@ start_docker_service:
     - name: docker
     - enable: True
 
-nginx-image:
+#https://docs.saltstack.com/en/latest/ref/states/all/salt.states.docker_image.html
+pull_nginx_image:
    docker_image.present:
-     - tag: nginx:latest
+     - name: nginx
+     - tag: latest
 
-nginx:
+#https://docs.saltstack.com/en/latest/ref/states/all/salt.states.docker_container.html
+start_nginx:
    docker_container.running:
      - image: nginx
