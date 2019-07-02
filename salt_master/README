@@ -18,7 +18,7 @@ salt-key -A
 salt '*' test.ping
 
 # Deploy /srv/salt/test.sls Salt State
-salt '*' state.apply ci_jenkins
+salt '*' state.apply test
 
 # Step 2: How to deploy a docker using saltstack completely virtual environment
 
