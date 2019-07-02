@@ -3,6 +3,7 @@ alias salt_minion_build='docker build -t salt_minion:1 .'
 
 #Docker run ALIAS
 alias salt_minion_run='docker run -d \
+  -v /var/run/docker.sock:/var/run/docker.sock \
   --name salt_minion \
   --hostname salt_minion \
   --network salt_network \
