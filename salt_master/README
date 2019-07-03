@@ -1,3 +1,10 @@
+# TIPS:
+############
+
+# Remove minion key
+####################################
+rm /etc/salt/pki/minion/*
+
 # Step 1: Get familiar with saltstack
 https://www.tutorialspoint.com/saltstack
 
@@ -32,7 +39,7 @@ salt 'testuser-Latitude-E5410' state.sls dock_nginx
 
 # Used salt_minion/rollback.sh to rollback minion to maiden state
 
-It works!!:
+It works on host!!:
 
 #SALT MASTER:
 ###################
@@ -149,9 +156,1062 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 eb16ab7071b5        nginx               "nginx -g 'daemon of…"   8 minutes ago       Up 8 minutes        80/tcp              start_nginx
 root@testuser-Latitude-E5410:/usr/localdisk#
 
-# TIPS:
-############
+# Step 4: Deploy on docker both master and minion running in docker both using ubuntu 18.4
+# To be correct the docker will be pulled and run on the host machine hosting the salt_master and salt_minion dockers as 'docker in docker' is a bit challenging
+# https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
 
-# On salt_minion: Remove minion key
-####################################
-rm /etc/salt/pki/minion/*
+salt 'salt_minion' state.sls dock_nginx_virt
+
+It works on docker (more or less)!!:
+
+#SALT MASTER:
+###################
+
+[root@salt-master] /srv/salt # salt 'salt_minion' state.sls dock_nginx_virt
+salt_minion:
+----------
+          ID: install_python3-pip
+    Function: pkg.installed
+        Name: python3-pip
+      Result: True
+     Comment: The following packages were installed/updated: python3-pip
+     Started: 09:08:52.546468
+    Duration: 129514.528 ms
+     Changes:
+              ----------
+              binutils:
+                  ----------
+                  new:
+                      2.30-21ubuntu1~18.04.2
+                  old:
+              binutils-common:
+                  ----------
+                  new:
+                      2.30-21ubuntu1~18.04.2
+                  old:
+              binutils-x86-64-linux-gnu:
+                  ----------
+                  new:
+                      2.30-21ubuntu1~18.04.2
+                  old:
+              build-essential:
+                  ----------
+                  new:
+                      12.4ubuntu1
+                  old:
+              cpp:
+                  ----------
+                  new:
+                      4:7.4.0-1ubuntu2.3
+                  old:
+              cpp-7:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              dbus:
+                  ----------
+                  new:
+                      1.12.2-1ubuntu1.1
+                  old:
+              dh-python:
+                  ----------
+                  new:
+                      3.20180325ubuntu2
+                  old:
+              dpkg-dev:
+                  ----------
+                  new:
+                      1.19.0.5ubuntu2.1
+                  old:
+              fakeroot:
+                  ----------
+                  new:
+                      1.22-2ubuntu1
+                  old:
+              g++:
+                  ----------
+                  new:
+                      4:7.4.0-1ubuntu2.3
+                  old:
+              g++-7:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              gcc:
+                  ----------
+                  new:
+                      4:7.4.0-1ubuntu2.3
+                  old:
+              gcc-7:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              gcc-7-base:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              gcc-8-base:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+                      8.3.0-6ubuntu1~18.04
+              gir1.2-glib-2.0:
+                  ----------
+                  new:
+                      1.56.1-1
+                  old:
+              libalgorithm-diff-perl:
+                  ----------
+                  new:
+                      1.19.03-1
+                  old:
+              libalgorithm-diff-xs-perl:
+                  ----------
+                  new:
+                      0.04-5
+                  old:
+              libalgorithm-merge-perl:
+                  ----------
+                  new:
+                      0.08-3
+                  old:
+              libapparmor1:
+                  ----------
+                  new:
+                      2.12-4ubuntu5.1
+                  old:
+              libasan4:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              libatomic1:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              libbinutils:
+                  ----------
+                  new:
+                      2.30-21ubuntu1~18.04.2
+                  old:
+              libc-dev-bin:
+                  ----------
+                  new:
+                      2.27-3ubuntu1
+                  old:
+              libc6-dev:
+                  ----------
+                  new:
+                      2.27-3ubuntu1
+                  old:
+              libcc1-0:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              libcilkrts5:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              libdbus-1-3:
+                  ----------
+                  new:
+                      1.12.2-1ubuntu1.1
+                  old:
+              libdpkg-perl:
+                  ----------
+                  new:
+                      1.19.0.5ubuntu2.1
+                  old:
+              libexpat1-dev:
+                  ----------
+                  new:
+                      2.2.5-3ubuntu0.1
+                  old:
+              libfakeroot:
+                  ----------
+                  new:
+                      1.22-2ubuntu1
+                  old:
+              libfile-fcntllock-perl:
+                  ----------
+                  new:
+                      0.22-3build2
+                  old:
+              libgcc-7-dev:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              libgcc1:
+                  ----------
+                  new:
+                      1:8.3.0-6ubuntu1~18.04.1
+                  old:
+                      1:8.3.0-6ubuntu1~18.04
+              libgdbm-compat4:
+                  ----------
+                  new:
+                      1.14.1-6
+                  old:
+              libgdbm5:
+                  ----------
+                  new:
+                      1.14.1-6
+                  old:
+              libgirepository-1.0-1:
+                  ----------
+                  new:
+                      1.56.1-1
+                  old:
+              libglib2.0-0:
+                  ----------
+                  new:
+                      2.56.4-0ubuntu0.18.04.3
+                  old:
+              libglib2.0-data:
+                  ----------
+                  new:
+                      2.56.4-0ubuntu0.18.04.3
+                  old:
+              libgomp1:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              libicu60:
+                  ----------
+                  new:
+                      60.2-3ubuntu3
+                  old:
+              libisl19:
+                  ----------
+                  new:
+                      0.19-1
+                  old:
+              libitm1:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              liblocale-gettext-perl:
+                  ----------
+                  new:
+                      1.07-3build2
+                  old:
+              liblsan0:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              libmpc3:
+                  ----------
+                  new:
+                      1.1.0-1
+                  old:
+              libmpfr6:
+                  ----------
+                  new:
+                      4.0.1-1
+                  old:
+              libmpx2:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              libperl5.26:
+                  ----------
+                  new:
+                      5.26.1-6ubuntu0.3
+                  old:
+              libpython3-dev:
+                  ----------
+                  new:
+                      3.6.7-1~18.04
+                  old:
+              libpython3.6:
+                  ----------
+                  new:
+                      3.6.8-1~18.04.1
+                  old:
+              libpython3.6-dev:
+                  ----------
+                  new:
+                      3.6.8-1~18.04.1
+                  old:
+              libquadmath0:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              libstdc++-7-dev:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              libstdc++6:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+                      8.3.0-6ubuntu1~18.04
+              libtsan0:
+                  ----------
+                  new:
+                      8.3.0-6ubuntu1~18.04.1
+                  old:
+              libubsan0:
+                  ----------
+                  new:
+                      7.4.0-1ubuntu1~18.04.1
+                  old:
+              libxml2:
+                  ----------
+                  new:
+                      2.9.4+dfsg1-6.1ubuntu1.2
+                  old:
+              linux-libc-dev:
+                  ----------
+                  new:
+                      4.15.0-54.58
+                  old:
+              make:
+                  ----------
+                  new:
+                      4.1-9.1ubuntu1
+                  old:
+              manpages:
+                  ----------
+                  new:
+                      4.15-1
+                  old:
+              manpages-dev:
+                  ----------
+                  new:
+                      4.15-1
+                  old:
+              netbase:
+                  ----------
+                  new:
+                      5.4
+                  old:
+              patch:
+                  ----------
+                  new:
+                      2.7.6-2ubuntu1
+                  old:
+              perl:
+                  ----------
+                  new:
+                      5.26.1-6ubuntu0.3
+                  old:
+              perl-modules-5.26:
+                  ----------
+                  new:
+                      5.26.1-6ubuntu0.3
+                  old:
+              python-pip-whl:
+                  ----------
+                  new:
+                      9.0.1-2.3~ubuntu1.18.04.1
+                  old:
+              python3-asn1crypto:
+                  ----------
+                  new:
+                      0.24.0-1
+                  old:
+              python3-cffi-backend:
+                  ----------
+                  new:
+                      1.11.5-1
+                  old:
+              python3-cryptography:
+                  ----------
+                  new:
+                      2.1.4-1ubuntu1.3
+                  old:
+              python3-dbus:
+                  ----------
+                  new:
+                      1.2.6-1
+                  old:
+              python3-dev:
+                  ----------
+                  new:
+                      3.6.7-1~18.04
+                  old:
+              python3-distutils:
+                  ----------
+                  new:
+                      3.6.8-1~18.04
+                  old:
+              python3-gi:
+                  ----------
+                  new:
+                      3.26.1-2ubuntu1
+                  old:
+              python3-keyring:
+                  ----------
+                  new:
+                      10.6.0-1
+                  old:
+              python3-keyrings.alt:
+                  ----------
+                  new:
+                      3.0-1
+                  old:
+              python3-lib2to3:
+                  ----------
+                  new:
+                      3.6.8-1~18.04
+                  old:
+              python3-pip:
+                  ----------
+                  new:
+                      9.0.1-2.3~ubuntu1.18.04.1
+                  old:
+              python3-secretstorage:
+                  ----------
+                  new:
+                      2.3.1-2
+                  old:
+              python3-setuptools:
+                  ----------
+                  new:
+                      39.0.1-2
+                  old:
+              python3-wheel:
+                  ----------
+                  new:
+                      0.30.0-0.2
+                  old:
+              python3-xdg:
+                  ----------
+                  new:
+                      0.25-4ubuntu1
+                  old:
+              python3.6-dev:
+                  ----------
+                  new:
+                      3.6.8-1~18.04.1
+                  old:
+              shared-mime-info:
+                  ----------
+                  new:
+                      1.9-2
+                  old:
+              xdg-user-dirs:
+                  ----------
+                  new:
+                      0.17-1ubuntu1
+                  old:
+----------
+          ID: install_supervisor
+    Function: pkg.installed
+        Name: supervisor
+      Result: True
+     Comment: The following packages were installed/updated: supervisor
+     Started: 09:11:02.066158
+    Duration: 20034.317 ms
+     Changes:
+              ----------
+              libpython-stdlib:
+                  ----------
+                  new:
+                      2.7.15~rc1-1
+                  old:
+              libpython2.7-minimal:
+                  ----------
+                  new:
+                      2.7.15-4ubuntu4~18.04
+                  old:
+              libpython2.7-stdlib:
+                  ----------
+                  new:
+                      2.7.15-4ubuntu4~18.04
+                  old:
+              python:
+                  ----------
+                  new:
+                      2.7.15~rc1-1
+                  old:
+              python-meld3:
+                  ----------
+                  new:
+                      1.0.2-2
+                  old:
+              python-minimal:
+                  ----------
+                  new:
+                      2.7.15~rc1-1
+                  old:
+              python-pkg-resources:
+                  ----------
+                  new:
+                      39.0.1-2
+                  old:
+              python2.7:
+                  ----------
+                  new:
+                      2.7.15-4ubuntu4~18.04
+                  old:
+              python2.7-minimal:
+                  ----------
+                  new:
+                      2.7.15-4ubuntu4~18.04
+                  old:
+              supervisor:
+                  ----------
+                  new:
+                      3.3.1-1.1
+                  old:
+----------
+          ID: install_docker_salt_module
+    Function: pip.installed
+        Name: docker
+      Result: True
+     Comment: All packages were successfully installed
+     Started: 09:11:24.856708
+    Duration: 8736.111 ms
+     Changes:
+              ----------
+              docker==4.0.2:
+                  Installed
+----------
+          ID: install_docker
+    Function: pkg.installed
+        Name: docker.io
+      Result: True
+     Comment: The following packages were installed/updated: docker.io
+     Started: 09:11:33.598345
+    Duration: 112862.655 ms
+     Changes:
+              ----------
+              apparmor:
+                  ----------
+                  new:
+                      2.12-4ubuntu5.1
+                  old:
+              bridge-utils:
+                  ----------
+                  new:
+                      1.5-15ubuntu1
+                  old:
+              cgroupfs-mount:
+                  ----------
+                  new:
+                      1.4
+                  old:
+              containerd:
+                  ----------
+                  new:
+                      1.2.6-0ubuntu1~18.04.1
+                  old:
+              dmsetup:
+                  ----------
+                  new:
+                      2:1.02.145-4.1ubuntu3
+                  old:
+              dns-root-data:
+                  ----------
+                  new:
+                      2018013001
+                  old:
+              dnsmasq-base:
+                  ----------
+                  new:
+                      2.79-1
+                  old:
+              docker.io:
+                  ----------
+                  new:
+                      18.09.5-0ubuntu1~18.04.2
+                  old:
+              git:
+                  ----------
+                  new:
+                      1:2.17.1-1ubuntu0.4
+                  old:
+              git-man:
+                  ----------
+                  new:
+                      1:2.17.1-1ubuntu0.4
+                  old:
+              iproute2:
+                  ----------
+                  new:
+                      4.15.0-2ubuntu1
+                  old:
+              iptables:
+                  ----------
+                  new:
+                      1.6.1-2ubuntu2
+                  old:
+              krb5-locales:
+                  ----------
+                  new:
+                      1.16-2ubuntu0.1
+                  old:
+              less:
+                  ----------
+                  new:
+                      487-0.1
+                  old:
+              libatm1:
+                  ----------
+                  new:
+                      1:2.5.1-2build1
+                  old:
+              libcurl3-gnutls:
+                  ----------
+                  new:
+                      7.58.0-2ubuntu3.7
+                  old:
+              libdevmapper1.02.1:
+                  ----------
+                  new:
+                      2:1.02.145-4.1ubuntu3
+                  old:
+              libedit2:
+                  ----------
+                  new:
+                      3.1-20170329-1
+                  old:
+              libelf1:
+                  ----------
+                  new:
+                      0.170-0.4ubuntu0.1
+                  old:
+              liberror-perl:
+                  ----------
+                  new:
+                      0.17025-1
+                  old:
+              libgssapi-krb5-2:
+                  ----------
+                  new:
+                      1.16-2ubuntu0.1
+                  old:
+              libidn11:
+                  ----------
+                  new:
+                      1.33-2.1ubuntu1.2
+                  old:
+              libip4tc0:
+                  ----------
+                  new:
+                      1.6.1-2ubuntu2
+                  old:
+              libip6tc0:
+                  ----------
+                  new:
+                      1.6.1-2ubuntu2
+                  old:
+              libiptc0:
+                  ----------
+                  new:
+                      1.6.1-2ubuntu2
+                  old:
+              libk5crypto3:
+                  ----------
+                  new:
+                      1.16-2ubuntu0.1
+                  old:
+              libkeyutils1:
+                  ----------
+                  new:
+                      1.5.9-9.2ubuntu2
+                  old:
+              libkrb5-3:
+                  ----------
+                  new:
+                      1.16-2ubuntu0.1
+                  old:
+              libkrb5support0:
+                  ----------
+                  new:
+                      1.16-2ubuntu0.1
+                  old:
+              libmnl0:
+                  ----------
+                  new:
+                      1.0.4-2
+                  old:
+              libnetfilter-conntrack3:
+                  ----------
+                  new:
+                      1.0.6-2
+                  old:
+              libnfnetlink0:
+                  ----------
+                  new:
+                      1.0.1-3
+                  old:
+              libnghttp2-14:
+                  ----------
+                  new:
+                      1.30.0-1ubuntu1
+                  old:
+              librtmp1:
+                  ----------
+                  new:
+                      2.4+20151223.gitfa8646d.1-1
+                  old:
+              libssl1.0.0:
+                  ----------
+                  new:
+                      1.0.2n-1ubuntu5.3
+                  old:
+              libx11-6:
+                  ----------
+                  new:
+                      2:1.6.4-3ubuntu0.2
+                  old:
+              libx11-data:
+                  ----------
+                  new:
+                      2:1.6.4-3ubuntu0.2
+                  old:
+              libxau6:
+                  ----------
+                  new:
+                      1:1.0.8-1
+                  old:
+              libxcb1:
+                  ----------
+                  new:
+                      1.13-2~ubuntu18.04
+                  old:
+              libxdmcp6:
+                  ----------
+                  new:
+                      1:1.1.2-3
+                  old:
+              libxext6:
+                  ----------
+                  new:
+                      2:1.3.3-1
+                  old:
+              libxmuu1:
+                  ----------
+                  new:
+                      2:1.1.2-2
+                  old:
+              libxtables12:
+                  ----------
+                  new:
+                      1.6.1-2ubuntu2
+                  old:
+              multiarch-support:
+                  ----------
+                  new:
+                      2.27-3ubuntu1
+                  old:
+              netcat:
+                  ----------
+                  new:
+                      1.10-41.1
+                  old:
+              netcat-traditional:
+                  ----------
+                  new:
+                      1.10-41.1
+                  old:
+              openssh-client:
+                  ----------
+                  new:
+                      1:7.6p1-4ubuntu0.3
+                  old:
+              pigz:
+                  ----------
+                  new:
+                      2.4-1
+                  old:
+              runc:
+                  ----------
+                  new:
+                      1.0.0~rc7+git20190403.029124da-0ubuntu1~18.04.1
+                  old:
+              ubuntu-fan:
+                  ----------
+                  new:
+                      0.12.10
+                  old:
+              xauth:
+                  ----------
+                  new:
+                      1:1.0.10-1
+                  old:
+----------
+          ID: start_docker_service
+    Function: supervisord.running
+        Name: docker
+      Result: True
+     Comment: Starting: docker
+     Started: 09:13:26.463693
+    Duration: 364.814 ms
+     Changes:
+              ----------
+              docker:
+                  Adding service: docker Starting: docker
+----------
+          ID: pull_nginx_image
+    Function: docker_image.present
+        Name: nginx
+      Result: False
+     Comment: An exception occurred in this state: Traceback (most recent call last):
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 124, in _validate_timeout
+                  float(value)
+              TypeError: float() argument must be a string or a number, not 'Timeout'
+
+              During handling of the above exception, another exception occurred:
+
+              Traceback (most recent call last):
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 207, in _retrieve_server_version
+                  return self.version(api_version=False)["ApiVersion"]
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/daemon.py", line 181, in version
+                  return self._result(self._get(url), json=True)
+                File "/usr/local/lib/python3.6/dist-packages/docker/utils/decorators.py", line 46, in inner
+                  return f(self, *args, **kwargs)
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 230, in _get
+                  return self.get(url, **self._set_request_timeout(kwargs))
+                File "/usr/lib/python3/dist-packages/requests/sessions.py", line 533, in get
+                  return self.request('GET', url, **kwargs)
+                File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+                  resp = self.send(prep, **send_kwargs)
+                File "/usr/lib/python3/dist-packages/requests/sessions.py", line 630, in send
+                  r = adapter.send(request, **kwargs)
+                File "/usr/lib/python3/dist-packages/requests/adapters.py", line 440, in send
+                  timeout=timeout
+                File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 588, in urlopen
+                  timeout_obj = self._get_timeout(timeout)
+                File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 303, in _get_timeout
+                  return Timeout.from_float(timeout)
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 154, in from_float
+                  return Timeout(read=timeout, connect=timeout)
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 94, in __init__
+                  self._connect = self._validate_timeout(connect, 'connect')
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 127, in _validate_timeout
+                  "int, float or None." % (name, value))
+              ValueError: Timeout value connect was Timeout(connect=60, read=60, total=None), but it must be an int, float or None.
+
+              During handling of the above exception, another exception occurred:
+
+              Traceback (most recent call last):
+                File "/usr/lib/python3/dist-packages/salt/state.py", line 1933, in call
+                  **cdata['kwargs'])
+                File "/usr/lib/python3/dist-packages/salt/loader.py", line 1939, in wrapper
+                  return f(*args, **kwargs)
+                File "/usr/lib/python3/dist-packages/salt/states/docker_image.py", line 243, in present
+                  image_info = __salt__['docker.inspect_image'](full_image)
+                File "/usr/lib/python3/dist-packages/salt/modules/dockermod.py", line 1843, in inspect_image
+                  ret = _client_wrapper('inspect_image', name)
+                File "/usr/lib/python3/dist-packages/salt/modules/dockermod.py", line 423, in wrapper
+                  __context__['docker.client'] = _get_client(timeout=timeout, **kwargs)
+                File "/usr/lib/python3/dist-packages/salt/modules/dockermod.py", line 387, in _get_client
+                  ret = docker.APIClient(**client_kwargs)
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 190, in __init__
+                  self._version = self._retrieve_server_version()
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 215, in _retrieve_server_version
+                  'Error while fetching server API version: {0}'.format(e)
+              docker.errors.DockerException: Error while fetching server API version: Timeout value connect was Timeout(connect=60, read=60, total=None), but it must be an int, float or None.
+     Started: 09:13:26.838343
+    Duration: 4.927 ms
+     Changes:
+----------
+          ID: start_nginx
+    Function: docker_container.running
+      Result: False
+     Comment: An exception occurred in this state: Traceback (most recent call last):
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 124, in _validate_timeout
+                  float(value)
+              TypeError: float() argument must be a string or a number, not 'Timeout'
+
+              During handling of the above exception, another exception occurred:
+
+              Traceback (most recent call last):
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 207, in _retrieve_server_version
+                  return self.version(api_version=False)["ApiVersion"]
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/daemon.py", line 181, in version
+                  return self._result(self._get(url), json=True)
+                File "/usr/local/lib/python3.6/dist-packages/docker/utils/decorators.py", line 46, in inner
+                  return f(self, *args, **kwargs)
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 230, in _get
+                  return self.get(url, **self._set_request_timeout(kwargs))
+                File "/usr/lib/python3/dist-packages/requests/sessions.py", line 533, in get
+                  return self.request('GET', url, **kwargs)
+                File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+                  resp = self.send(prep, **send_kwargs)
+                File "/usr/lib/python3/dist-packages/requests/sessions.py", line 630, in send
+                  r = adapter.send(request, **kwargs)
+                File "/usr/lib/python3/dist-packages/requests/adapters.py", line 440, in send
+                  timeout=timeout
+                File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 588, in urlopen
+                  timeout_obj = self._get_timeout(timeout)
+                File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 303, in _get_timeout
+                  return Timeout.from_float(timeout)
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 154, in from_float
+                  return Timeout(read=timeout, connect=timeout)
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 94, in __init__
+                  self._connect = self._validate_timeout(connect, 'connect')
+                File "/usr/lib/python3/dist-packages/urllib3/util/timeout.py", line 127, in _validate_timeout
+                  "int, float or None." % (name, value))
+              ValueError: Timeout value connect was Timeout(connect=60, read=60, total=None), but it must be an int, float or None.
+
+              During handling of the above exception, another exception occurred:
+
+              Traceback (most recent call last):
+                File "/usr/lib/python3/dist-packages/salt/state.py", line 1933, in call
+                  **cdata['kwargs'])
+                File "/usr/lib/python3/dist-packages/salt/loader.py", line 1939, in wrapper
+                  return f(*args, **kwargs)
+                File "/usr/lib/python3/dist-packages/salt/states/docker_container.py", line 1695, in running
+                  image_id = _resolve_image(ret, image, client_timeout)
+                File "/usr/lib/python3/dist-packages/salt/states/docker_container.py", line 193, in _resolve_image
+                  image_id = __salt__['docker.resolve_image_id'](image)
+                File "/usr/lib/python3/dist-packages/salt/modules/dockermod.py", line 1911, in resolve_image_id
+                  inspect_result = inspect_image(name)
+                File "/usr/lib/python3/dist-packages/salt/modules/dockermod.py", line 1843, in inspect_image
+                  ret = _client_wrapper('inspect_image', name)
+                File "/usr/lib/python3/dist-packages/salt/modules/dockermod.py", line 423, in wrapper
+                  __context__['docker.client'] = _get_client(timeout=timeout, **kwargs)
+                File "/usr/lib/python3/dist-packages/salt/modules/dockermod.py", line 387, in _get_client
+                  ret = docker.APIClient(**client_kwargs)
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 190, in __init__
+                  self._version = self._retrieve_server_version()
+                File "/usr/local/lib/python3.6/dist-packages/docker/api/client.py", line 215, in _retrieve_server_version
+                  'Error while fetching server API version: {0}'.format(e)
+              docker.errors.DockerException: Error while fetching server API version: Timeout value connect was Timeout(connect=60, read=60, total=None), but it must be an int, float or None.
+     Started: 09:13:26.843953
+    Duration: 1.969 ms
+     Changes:
+
+Summary for salt_minion
+------------
+Succeeded: 5 (changed=5)
+Failed:    2
+------------
+Total states run:     7
+Total run time: 271.519 s
+ERROR: Minions returned with non-zero exit code
+
+#Round 2
+###################
+
+[root@salt-master] /srv/salt # salt 'salt_minion' state.sls dock_nginx_virt
+salt_minion:
+----------
+          ID: install_python3-pip
+    Function: pkg.installed
+        Name: python3-pip
+      Result: True
+     Comment: All specified packages are already installed
+     Started: 09:13:54.338080
+    Duration: 23.884 ms
+     Changes:
+----------
+          ID: install_supervisor
+    Function: pkg.installed
+        Name: supervisor
+      Result: True
+     Comment: All specified packages are already installed
+     Started: 09:13:54.362102
+    Duration: 12.577 ms
+     Changes:
+----------
+          ID: install_docker_salt_module
+    Function: pip.installed
+        Name: docker
+      Result: True
+     Comment: All packages were successfully installed
+     Started: 09:13:54.639877
+    Duration: 3854.476 ms
+     Changes:
+              ----------
+              docker==4.0.2:
+                  Installed
+----------
+          ID: install_docker
+    Function: pkg.installed
+        Name: docker.io
+      Result: True
+     Comment: All specified packages are already installed
+     Started: 09:13:58.499635
+    Duration: 2797.592 ms
+     Changes:
+----------
+          ID: start_docker_service
+    Function: supervisord.running
+        Name: docker
+      Result: True
+     Comment: Starting: docker
+     Started: 09:14:01.297837
+    Duration: 342.532 ms
+     Changes:
+              ----------
+              docker:
+                  Adding service: docker Starting: docker
+----------
+          ID: pull_nginx_image
+    Function: docker_image.present
+        Name: nginx
+      Result: True
+     Comment: Image 'nginx:latest' was pulled
+     Started: 09:14:01.641757
+    Duration: 2671.579 ms
+     Changes:
+              ----------
+              Layers:
+                  ----------
+                  Already_Pulled:
+                      - fc7181108d40
+                      - d2e987ca2267
+                      - 0b760b431b11
+              Status:
+                  Downloaded newer image for nginx:latest
+              Time_Elapsed:
+                  1.4934098720550537
+              retcode:
+                  0
+----------
+          ID: start_nginx
+    Function: docker_container.running
+      Result: True
+     Comment: Container 'start_nginx' is already configured as specified. State changed from 'stopped' to 'running'.
+     Started: 09:14:04.314145
+    Duration: 2909.566 ms
+     Changes:
+              ----------
+              state:
+                  ----------
+                  new:
+                      running
+                  old:
+                      stopped
+
+Summary for salt_minion
+------------
+Succeeded: 7 (changed=4)
+Failed:    0
+------------
+Total states run:     7
+Total run time:  12.612 s
+[root@salt-master] /srv/salt #
+
+#SALT MINION:
+###################
+
+[root@salt-minion] / # docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                                    NAMES
+388d473ba85f        salt_minion:1       "/bin/bash"              7 minutes ago       Up 7 minutes                                                                                 salt_minion
+20ac26b72e57        salt_master:1       "/bin/bash"              8 minutes ago       Up 8 minutes                                                                                 salt_master
+5c92d22db30f        nginx               "nginx -g 'daemon of…"   20 hours ago        Up 49 seconds       80/tcp                                                                   start_nginx
+407a469996b2        ci-monitor:1        "/usr/bin/supervisord"   4 days ago          Up 2 days           0.0.0.0:3003->3003/tcp, 0.0.0.0:8086->8086/tcp, 0.0.0.0:3004->8888/tcp   ci-monitor
+[root@salt-minion] / #

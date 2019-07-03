@@ -31,3 +31,5 @@ COPY saltstack/salt/test/init.sls /srv/salt/test/
 # Second experiment
 # https://hub.packtpub.com/docker-container-management-with-saltstack/
 COPY saltstack/salt/dock_nginx /srv/salt/dock_nginx
+
+COPY saltstack/salt/dock_nginx_virt /srv/salt/dock_nginx_virt
