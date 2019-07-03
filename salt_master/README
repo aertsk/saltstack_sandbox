@@ -30,7 +30,7 @@ salt '*' state.apply test
 # Step 2: How to deploy a docker using saltstack completely virtual environment
 
 # Deploy docker on minion:
-salt 'salt_minion' state.sls dock_nginx
+salt 'salt_minion' state.sls dock_nginx_virt
 
 # Step 3: Deploy on host both master and minion running on host both ubuntu 18.4
 

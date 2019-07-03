@@ -21,6 +21,11 @@ install_docker:
   pkg.installed:
     - name: docker.io
 
+#For some reason the docker service is not started hence following command
+start_docker:
+  cmd.run:
+    - name: /etc/init.d/docker start
+
 #https://docs.saltstack.com/en/latest/ref/states/all/salt.states.supervisord.html
 start_docker_service:
   supervisord.running:
